@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EmployeeRecord</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EmployeeRecord</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TimeSheet" asp-action="Index">TimeSheet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - EmployeeRecord - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#listTbl').DataTable();
+
+            google.charts.load('current', {
+        packages: ['corechart', 'bar']
+    });
+    google.charts.setOnLoadCallback(LoadData);
+function LoadData() {  
+        $.ajax({  
+              
+            url: 'TimeSheet/PopulationChart',  
+            dataType: "json",  
+            type: "GET",  
+            error: function(xhr, status, error) {  
+                var err = eval("(" + xhr.responseText + ")");  
+                toastr.error(err.message);  
+            },  
+            success: function(data) {  
+                PopulationChart(data);  
+                return false;  
+            }  
+        });  
+        return false;  
+    }  
+  
+    function PopulationChart(data) {  
+        var dataArray = [  
+            ['Project Name', 'Mon', 'Tue', 'Web', 'Thu','Fri']  
+        ];  
+        $.each(data, function(i, item) {  
+            dataArray.push([item.projectName, item.monDuration, item.tueDuration, item.webDuration, item.thuDuration, item.friDuration]);  
+        });  
+        var data = google.visualization.arrayToDataTable(dataArray);  
+        var options = {  
+            title: 'Project Time Spend',  
+  
+            is3D: true,  
+            isStacked: true,  
+  
+            chartArea: {  
+                width: '50%'  
+            },  
+            colors: ['#b0120a', '#7b1fa2', '#ffab91', '#d95f02'],  
+            hAxis: {  
+                title: 'Project',  
+                minValue: 0  
+            },  
+            vAxis: {  
+                title: 'Total Time Spend'  
+            }  
+        };  
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));  
+        
+        chart.draw(data, options);  
+        return false;  
+    }  
+
+
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

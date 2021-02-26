@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+    var task = (EmpTask)ViewData["task"];
+    var projList = (List<Project>)ViewData["projects"];
+}
+
+<h1>Edit</h1>
+
+<div class="form-group row">
+    <input id="taskId" value="@task.TaskId" hidden />
+</div>
+<div class="form-group row">
+    
+    <div class="col-sm-4">
+        <label>Task Name</label>
+    </div>
+    <div class="col-sm-8">
+        <input id="taskName" type="text" value="@task.Task_Name"/>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label>Task_Description</label>
+    </div>
+    <div class="col-sm-8">
+        <input id="taskDesc" type="text" value="@task.Task_Description"/>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label>Choose Project</label>
+    </div>
+    <div class="col-sm-8">
+        <select id="projectId" >
+            <option>"Select Projects"</option>
+            @{
+                @foreach (var proj in projList)
+                {
+                    <option value="@proj.projectId">@proj.projectName</option>
+                }
+            }
+        </select>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label>Client_Name</label>
+    </div>
+    <div class="col-sm-8">
+        <input id="clientName" type="text" value="@task.Client_Name"/>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label>Date</label>
+    </div>
+    <div class="col-sm-8">
+        <input id="date" type="date" value="@task.Date"/>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label>Start_Time</label>
+    </div>
+    <div class="col-sm-8">
+        <input id="startTime" type="time" value="@task.Start_Time"/>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label>End_Time</label>
+    </div>
+    <div class="col-sm-8">
+        <input id="endTime" type="time" value="@task.End_Time"/>
+    </div>
+
+</div>
+<div class="form-group row">
+    <div class="col-sm-6">
+        <input type="button" class="btn-secondary btn-sm" onclick="location.href='@Url.Action("Index", "Home")'" value="Back"/>
+    </div>
+    <div class="col-sm-6">
+        <input type='button' class="btn-primary btn-sm" onclick='CreateNew()' value="Save">
+    </div>
+
+</div>
+<script>
+
+    function CreateNew() {
+        //alert("Here");
+
+        var taskId = document.getElementById("taskId").value;
+        var taskName = document.getElementById("taskName").value;
+
+        var taskDesc = document.getElementById("taskDesc").value;
+
+        var clientName = document.getElementById("clientName").value;
+
+        var date = document.getElementById("date").value;
+        var startTime = document.getElementById("startTime").value;
+        var endTime = document.getElementById("endTime").value;
+        var projId = document.getElementById('projectId').selectedOptions[0].value;
+
+        alert(taskName);
+        $.ajax({
+            type: 'POST',
+            url: '/Home/Submit/',
+            data: {
+                taskId: taskId,
+                taskName: taskName,
+                taskDesc: taskDesc,
+                clientName: clientName,
+                date: date,
+                startTime: startTime,
+                endTime: endTime,
+                projId:projId
+            },
+            success: function (result) {
+                if (result == true) {
+                    alert("Add Successfully!");
+                    window.location.href = "/Home/Index";
+                } else {
+                    alert("ERROR");
+                }
+              
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+
+
+</script>
+

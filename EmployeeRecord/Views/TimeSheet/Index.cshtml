@@ -1,0 +1,281 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    var list = (List<TaskDTO>)ViewData["list"];
+}
+<html>
+<body>
+   
+    <div class="card">
+        <div class="card-header">
+            Summary
+        </div>
+        <div class="card-body">
+            <div class="form-group row align-items-center">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <input type="button" value="Last Week" class="btn-primary btn-sm" id="last" onclick="lastData()" />
+                    <input type="button" value="This Week" class="btn-primary btn-sm" id="this" onclick="thisWeekData()" />
+                    <input type="button" value="Next Week" class="btn-primary btn-sm" id="next" onclick="nextData()" />
+
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+            <hr />
+            <table id="listTbl" style="width:100%">
+                <thead style="background-color: lightskyblue">
+                    <tr>
+                        <th>No</th>
+                        <th>Project Name</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Web</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int a = 1;
+                        @foreach (var data in list)
+                        {
+                            <tr>
+                                <td>
+                                    @a
+
+                                </td>
+                                <td>@data.projectName</td>
+                                <td>@data.monDuration</td>
+                                <td>@data.tueDuration</td>
+                                <td>@data.webDuration</td>
+                                <td>@data.thuDuration</td>
+                                <td>@data.friDuration</td>
+                                <td>@data.total</td>
+
+                            </tr>
+                            a++;
+
+                        }
+                    }
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Chart
+        </div>
+        <div class="card-body">
+            <div class="form-group row align-items-center">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <input type="button" value="Last Week" class="btn-primary btn-sm" id="last1" onclick="lastCharData()" />
+                    <input type="button" value="This Week" class="btn-primary btn-sm" id="this1" onclick="thisWeekChartData()" />
+                    <input type="button" value="Next Week" class="btn-primary btn-sm" id="next1" onclick="nextChartData()" />
+
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+            <hr />
+            <div id="chart_div"></div>
+        </div>
+
+    </div>
+</body>
+</html>
+
+
+
+
+<script>
+    function lastCharData() {
+        //alert("last");
+        var f = "last";
+        $.ajax({
+            type: 'POST',
+            url: '/TimeSheet/GetChartDataByWeek/',
+            data: {
+                flag: f
+            },
+            success: function (result) {
+                PopulationChart(result);
+                document.getElementById("last").disabled = true;
+                document.getElementById("next").disabled = false;
+                document.getElementById("this").disabled = false;
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+    function nextChartData() {
+        //alert("last");
+        var f = "next";
+        $.ajax({
+            type: 'POST',
+            url: '/TimeSheet/GetChartDataByWeek/',
+            data: {
+                flag: f
+            },
+            success: function (result) {
+                PopulationChart(result);
+
+                document.getElementById("last").disabled = false;
+                document.getElementById("next").disabled = true;
+                document.getElementById("this").disabled = false;
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+    function thisWeekChartData() {
+        //alert("last");
+        var f = "current";
+        $.ajax({
+            type: 'POST',
+            url: '/TimeSheet/GetChartDataByWeek/',
+            data: {
+                flag: f
+            },
+            success: function (result) {
+                PopulationChart(result);
+
+                document.getElementById("last").disabled = false;
+                document.getElementById("next").disabled = false;
+                document.getElementById("this").disabled = true;
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+
+    function lastData() {
+        //alert("last");
+        var f = "last";
+        $.ajax({
+            type: 'POST',
+            url: '/TimeSheet/GetDataByWeek/',
+            data: {
+                flag: f
+            },
+            success: function (result) {
+                populateApproveDataTable(result);
+
+                document.getElementById("last").disabled = true;
+                document.getElementById("next").disabled = false;
+                document.getElementById("this").disabled = false;
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+    function nextData() {
+        //alert("next");
+        var f = "next";
+        $.ajax({
+            type: 'POST',
+            url: '/TimeSheet/GetDataByWeek/',
+            data: {
+                flag: f
+            },
+            success: function (result) {
+                populateApproveDataTable(result);
+
+                document.getElementById("last").disabled = false;
+                document.getElementById("next").disabled = true;
+                document.getElementById("this").disabled = false;
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+    function thisWeekData() {
+        //alert("last");
+        var f = "current";
+        $.ajax({
+            type: 'POST',
+            url: '/TimeSheet/GetDataByWeek/',
+            data: {
+                flag: f
+            },
+            success: function (result) {
+                populateApproveDataTable(result);
+
+                document.getElementById("last").disabled = false;
+                document.getElementById("next").disabled = false;
+                document.getElementById("this").disabled = true;
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+        })
+    }
+    function populateApproveDataTable(data) {
+        console.log("populating data table...");
+        // clear the table before populating it with more data
+        $("#listTbl").DataTable().clear();
+        var length = data.length;
+
+        $.each(data, function (i, item) {
+            // You could also use an ajax property on the data table initialization
+            $('#listTbl').dataTable().fnAddData([
+                i,
+                item.projectName,
+                item.monDuration,
+                item.tueDuration,
+                item.webDuration,
+                item.thuDuration,
+                item.friDuration,
+                item.total
+            ]);
+        });
+
+    }
+    function PopulationChart(data) {
+        var dataArray = [
+            ['Project Name', 'Mon', 'Tue', 'Web', 'Thu', 'Fri']
+        ];
+        $.each(data, function (i, item) {
+            dataArray.push([item.projectName, item.monDuration, item.tueDuration, item.webDuration, item.thuDuration, item.friDuration]);
+        });
+        var data = google.visualization.arrayToDataTable(dataArray);
+        var options = {
+            title: 'Project Time Spend',
+
+            is3D: true,
+            isStacked: true,
+
+            chartArea: {
+                width: '50%'
+            },
+            colors: ['#b0120a', '#7b1fa2', '#ffab91', '#d95f02'],
+            hAxis: {
+                title: 'Project',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Total Time Spend'
+            }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+        return false;
+    }
+</script>
+

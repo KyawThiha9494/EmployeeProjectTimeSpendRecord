@@ -1,0 +1,463 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+    var monList = (List<EmpTask>)ViewData["mon"];
+    var tueList = (List<EmpTask>)ViewData["tue"];
+    var webList = (List<EmpTask>)ViewData["web"];
+    var thuList = (List<EmpTask>)ViewData["thu"];
+    var friList = (List<EmpTask>)ViewData["fri"];
+     var projList = (List<Project>)ViewData["projects"];
+
+}
+
+<div class="form-group">
+    <div class="form-group row">
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">ADD</button>
+    </div>
+
+    <hr />
+
+    <div class="card">
+        <div class="card-header">
+            Monday
+        </div>
+        <div class="card-body">
+            <table id="" style="width:100%">
+                <thead style="background-color: lightskyblue">
+                    <tr>
+                        <th>No</th>
+                        <th>Project Name</th>
+                        <th>Client Name</th>
+                        <th>Task Name</th>
+                        <th>Start Time - End Time</th>
+                        <th>Duration</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int a = 1;
+                        @foreach (var data in monList)
+                        {
+                            <tr>
+                                <td>
+                                    @a
+
+                                    <input hidden value="@data.TaskId" id="YourKey" />
+                                </td>
+                                <td>@data.project.projectName</td>
+                                <td>@data.Client_Name</td>
+                                <td>@data.Task_Name</td>
+                                <td>@data.Start_Time - @data.End_Time</td>
+                                <td>@data.Duration</td>
+                                <td>
+                                    <input type="button" value="Detail" onclick="location.href='@Url.Action("Edit", "Home")?taskId=' + @data.TaskId" />
+                                    @*
+                            <input type='button' class="btn-primary btb-sm" onclick='Edit("@data.TaskId")' value="Edit"></td>
+
+                                    *@
+                            </tr>
+                            a++;
+
+                        }
+                    }
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Tuesday
+        </div>
+        <div class="card-body">
+            <table id="listTbl" style="width:100%">
+                <thead style="background-color: lightskyblue">
+                    <tr>
+                        <th>No</th>
+                        <th>Project Name</th>
+                        <th>Client Name</th>
+                        <th>Task Name</th>
+                        <th>Start Time - End Time</th>
+                        <th>Duration</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                        @foreach (var data in tueList)
+                        {
+                    <tr>
+                        <td>
+                            @i
+
+                            <input hidden value="@data.TaskId" id="YourKey" />
+                        </td>
+                        <td>@data.project.projectName</td>
+                        <td>@data.Client_Name</td>
+                        <td>@data.Task_Name</td>
+                        <td>@data.Start_Time - @data.End_Time</td>
+                        <td>@data.Duration</td>
+                        <td><input type="button" value="Detail" onclick="location.href='@Url.Action("Edit", "Home")?taskId=' + @data.TaskId" />
+                        @*
+        <input type='button' class="btn-primary btb-sm" onclick='Edit("@data.TaskId")' value="Edit"></td>
+
+                        *@
+                    </tr>
+                            i++;
+
+                        }
+                    }
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Wednesday
+        </div>
+        <div class="card-body">
+            <table id="listTbl" style="width:100%">
+                <thead style="background-color: lightskyblue">
+                    <tr>
+                        <th>No</th>
+                        <th>Project Name</th>
+                        <th>Client Name</th>
+                        <th>Task Name</th>
+                        <th>Start Time - End Time</th>
+                        <th>Duration</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int b = 1;
+                        @foreach (var data in webList)
+                        {
+                            <tr>
+                                <td>
+                                    @b
+
+                                    <input hidden value="@data.TaskId" id="YourKey" />
+                                </td>
+                                <td>@data.project.projectName</td>
+                                <td>@data.Client_Name</td>
+                                <td>@data.Task_Name</td>
+                                <td>@data.Start_Time "-" @data.End_Time</td>
+                                <td>@data.Duration</td>
+                                <td>
+                                    <input type="button" value="Detail" onclick="location.href='@Url.Action("Edit", "Home")?taskId=' + @data.TaskId" />
+                                    @*
+                            <input type='button' class="btn-primary btb-sm" onclick='Edit("@data.TaskId")' value="Edit"></td>
+
+                                    *@
+                            </tr>
+                            b++;
+
+                        }
+                    }
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Thursday
+        </div>
+        <div class="card-body">
+            <table id="listTbl" style="width:100%">
+                <thead style="background-color: lightskyblue">
+                    <tr>
+                        <th>No</th>
+                        <th>Project Name</th>
+                        <th>Client Name</th>
+                        <th>Task Name</th>
+                        <th>Start Time - End Time</th>
+                        <th>Duration</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int c = 1;
+                        @foreach (var data in thuList)
+                        {
+                            <tr>
+                                <td>
+                                    @c
+
+                                    <input hidden value="@data.TaskId" id="YourKey" />
+                                </td>
+                                <td>@data.project.projectName</td>
+                                <td>@data.Client_Name</td>
+                                <td>@data.Task_Name</td>
+                                <td>@data.Start_Time "-" @data.End_Time</td>
+                                <td>@data.Duration</td>
+                                <td>
+                                    <input type="button" value="Detail" onclick="location.href='@Url.Action("Edit", "Home")?taskId=' + @data.TaskId" />
+                                    @*
+                            <input type='button' class="btn-primary btb-sm" onclick='Edit("@data.TaskId")' value="Edit"></td>
+
+                                    *@
+                            </tr>
+                            c++;
+
+                        }
+                    }
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Friday
+        </div>
+        <div class="card-body">
+            <table id="listTbl" style="width:100%">
+                <thead style="background-color: lightskyblue">
+                    <tr>
+                        <th>No</th>
+                        <th>Project Name</th>
+                        <th>Client Name</th>
+                        <th>Task Name</th>
+                        <th>Start Time - End Time</th>
+                        <th>Duration</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int d = 1;
+                        @foreach (var data in friList)
+                        {
+                            <tr>
+                                <td>
+                                    @d
+
+                                    <input hidden value="@data.TaskId" id="YourKey" />
+                                </td>
+                             <td>@data.project.projectName</td>
+                                <td>@data.Client_Name</td>
+                                <td>@data.Task_Name</td>
+                                <td>@data.Start_Time "-" @data.End_Time</td>
+                                <td>@data.Duration</td>
+                                <td>
+                                    <input type="button" value="Detail" onclick="location.href='@Url.Action("Edit", "Home")?taskId=' + @data.TaskId" />
+                                    @*
+                            <input type='button' class="btn-primary btb-sm" onclick='Edit("@data.TaskId")' value="Edit"></td>
+
+                                    *@
+                            </tr>
+                            d++;
+
+                        }
+                    }
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Task Name</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="taskName" type="text" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Task_Description</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="taskDesc" type="text" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Choose Project</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select id="projectId">
+                            <option>"Select Projects"</option>
+                            @{
+                                @foreach (var proj in projList)
+                                {
+                            <option value="@proj.projectId">@proj.projectName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Client_Name</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="clientName" type="text" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="date" type="date" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Start_Time</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="startTime" type="time" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>End_Time</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="endTime" type="time" />
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-9">
+
+                    </div>
+                    <div class="col-sm-3">
+                        <input type='button' class="btn-primary btb-sm" onclick='CreateNew()' value="Save">
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    
+    function Edit(id) {
+        //alert("Here");
+        alert(id);
+        $.ajax({
+            type: 'POST',
+            url: '/Home/GetDataById/',
+            data: {
+                taskId: id
+            },
+            success: function (result) {
+
+                alert(result.Task)
+                document.getElementById("taskName").value = result.Task_Name;
+                document.getElementById("taskDesc").value= result.Task_Description;
+                document.getElementById("clientName").value= result.Client_Name;
+                document.getElementById("date").value= result.Date;
+                document.getElementById("startTime").value= result.Start_Time;
+                document.getElementById("endTime").value= result.End_Time;
+                document.getElementById("myModal").showModal(); 
+                if (result == true) {
+                    alert("Add Successfully!");
+                } else {
+                    alert("ERROR");
+                }
+                
+            },
+            error: function (result) {
+                alert('error');
+                $('#myModal').modal('hide');
+            }
+
+        })
+    }
+
+    function CreateNew() {
+        //alert("Here");
+        var taskName = document.getElementById("taskName").value;
+
+        var taskDesc = document.getElementById("taskDesc").value;
+
+        var clientName = document.getElementById("clientName").value;
+
+        var date = document.getElementById("date").value;
+        var startTime = document.getElementById("startTime").value;
+        var endTime = document.getElementById("endTime").value;
+        
+        var projId = document.getElementById('projectId').selectedOptions[0].value;
+     
+
+        alert(taskName);
+        $.ajax({
+            type: 'POST',
+            url: '/Home/Submit/',
+            data: {
+                taskName: taskName,
+                taskDesc: taskDesc,
+                clientName: clientName,
+                date: date,
+                startTime: startTime,
+                endTime: endTime,
+                projId:projId
+            },
+            success: function (result) {
+                if (result == true) {
+                    alert("Add Successfully!");
+                    location.reload();
+                } else {
+                    alert("ERROR");
+                }
+            },
+            error: function (result) {
+                alert('error');
+                $('#myModal').modal('hide');
+            }
+
+        })
+    }
+
+    
+</script>
